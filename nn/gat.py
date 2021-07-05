@@ -38,7 +38,7 @@ class GraphAttention(nn.Module):
         attn = self.leaky_relu(attn)
         # mask
         if mask is not None:
-            attn += torch.where(mask > 0, torch.zeros_like(mask), torch.full_like(mask, -9e9))
+            attn += torch.where(mask > 0, 0, -1e12)
         # softmax
         attn = torch.softmax(attn, dim=-1)  # [batch, nodes, nodes]
         # dropout

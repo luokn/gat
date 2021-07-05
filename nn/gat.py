@@ -16,10 +16,9 @@ class GraphAttention(nn.Module):
         super(GraphAttention, self).__init__()
         self.W = nn.Parameter(torch.empty([out_channels, in_channels]), requires_grad=True)
         self.a = nn.Parameter(torch.empty(2, out_channels), requires_grad=True)
+        self.bias = nn.Parameter(torch.empty(out_channels), requires_grad=True) if bias else None
         self.dropout = nn.Dropout(dropout)
         self.leaky_relu = nn.LeakyReLU(alpha)
-        if bias:
-            self.bias = nn.Parameter(torch.empty(out_channels), requires_grad=True)
 
     def forward(self, x: torch.Tensor, mask: torch.Tensor = None):
         """
